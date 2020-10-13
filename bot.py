@@ -18,7 +18,7 @@ else:
 logger = telebot.logger
 bot = telebot.TeleBot(token, num_threads=6)
 task = task()
-telebot.logger.setLevel(logging.DEBUG)
+telebot.logger.setLevel(logging.INFO)
 
 @bot.message_handler(commands=['start', 'go', 'help'])
 def handle_start(message):
