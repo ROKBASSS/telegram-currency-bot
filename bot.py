@@ -1,3 +1,4 @@
+import json
 import telebot
 from task import task
 import markups as m
@@ -6,9 +7,19 @@ import vtbparser
 import tinkoff
 import os
 
-TOKEN = 'TOKEN' in os.environ
-print(TOKEN)
-bot = telebot.TeleBot(TOKEN)
+
+if 'TOKEN' in os.environ:
+    TOKEN = 'TOKEN' in os.environ
+    print(TOKEN)
+    bot = telebot.TeleBot(TOKEN)
+else:
+    with open('token.json') as file:
+        TOKEN = json.load(file)
+    print("Bot was started locally...")
+    print(TOKEN[0]['token'])
+    bot = telebot.TeleBot(TOKEN[0]['token']) 
+    print("Token inserted! Working...")
+
 task = task()
 
 @bot.message_handler(commands=['start', 'go', 'help'])
