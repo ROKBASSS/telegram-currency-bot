@@ -5,7 +5,7 @@ import sberparser
 import vtbparser
 import tinkoff
 import os
-# main variables
+
 TOKEN = 'TOKEN' in os.environ
 bot = telebot.TeleBot(TOKEN)
 task = task()
@@ -13,11 +13,8 @@ task = task()
 @bot.message_handler(commands=['start', 'go', 'help'])
 def handle_start(message):
     if not task.isRunning:
-        chat_id = message.chat.id
         task.isRunning = True
-        msg = bot.send_message(
-            chat_id, 'Какой банк вы хотите?', reply_markup=m.start_markup)
-        bot.register_next_step_handler(message, askCurrencies)
+        bot.register_next_step_handler(message, chooseBank)
         return
 
 
