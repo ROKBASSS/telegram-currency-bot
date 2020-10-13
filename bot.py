@@ -7,9 +7,10 @@ import bs4
 import sberparser
 import vtbparser
 import tinkoff
+import os
 # main variables
-
-bot = telebot.TeleBot("INSERT TOKEN HERE")
+TOKEN = 'TOKEN' in os.environ
+bot = telebot.TeleBot(TOKEN)
 task = task()
 
 @bot.message_handler(commands=['start', 'go', 'help'])
