@@ -1,9 +1,6 @@
-import json
 import telebot
-from telebot.types import Message
 from task import task
 import markups as m
-import bs4
 import sberparser
 import vtbparser
 import tinkoff
@@ -20,7 +17,7 @@ def handle_start(message):
         task.isRunning = True
         msg = bot.send_message(
             chat_id, 'Какой банк вы хотите?', reply_markup=m.start_markup)
-        bot.register_next_step_handler(msg, askCurrencies)
+        bot.register_next_step_handler(message, askCurrencies)
         return
 
 
