@@ -51,7 +51,7 @@ def askCurrencies(message):
         bot.register_next_step_handler(msg, getValuesTink)
         return
     else:
-        msg = bot.send_message(chat_id, 'Нет такого. Какой банк вы хотите?',reply_markup=m.start_markup)
+        msg = bot.send_message(chat_id, 'Какой банк вы хотите?',reply_markup=m.start_markup)
         bot.register_next_step_handler(msg, askCurrencies)
         return
 
