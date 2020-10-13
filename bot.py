@@ -7,6 +7,7 @@ import tinkoff
 import os
 
 TOKEN = 'TOKEN' in os.environ
+print(TOKEN)
 bot = telebot.TeleBot(TOKEN)
 task = task()
 
