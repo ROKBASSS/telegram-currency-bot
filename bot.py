@@ -6,25 +6,26 @@ import sberparser
 import vtbparser
 import tinkoff
 import os
-
+import logging
 token = ''
 
 if 'TELEGRAM_TOKEN' in os.environ:
     token = os.environ['TELEGRAM_TOKEN']
 else:
     with open('token.json') as file:
-        token = json.load(file)
+        token = json.load(file)[0]['token']
     print("Bot was started locally...")
-
-bot = telebot.TeleBot(token)
+logger = telebot.logger
+bot = telebot.TeleBot(token, num_threads=6)
 task = task()
+telebot.logger.setLevel(logging.DEBUG)
 
 @bot.message_handler(commands=['start', 'go', 'help'])
 def handle_start(message):
-    if not task.isRunning:
-        task.isRunning = True
-        bot.register_next_step_handler(message, chooseBank)
-        return
+    bot.reply_to(message, "Привет партнёр! Сейчас доступны: Сбербанк, ВТБ, Тинькофф")
+    msg = bot.send_message(message.chat.id, 'Какой банк вы хотите?', reply_markup=m.start_markup)
+    bot.register_next_step_handler(msg, askCurrencies)
+    return
 
 
 def chooseBank(message):
@@ -51,7 +52,7 @@ def askCurrencies(message):
         bot.register_next_step_handler(msg, getValuesTink)
         return
     else:
-        msg = bot.send_message(chat_id, 'Какой банк вы хотите?',reply_markup=m.start_markup)
+        msg = bot.send_message(chat_id, 'Нет такого банка. Какой банк вы хотите?',reply_markup=m.start_markup)
         bot.register_next_step_handler(msg, askCurrencies)
         return
 
@@ -151,5 +152,4 @@ def getValuesTink(message):
 
 
 bot.enable_save_next_step_handlers(delay=2)
-bot.load_next_step_handlers()
 bot.polling()
