@@ -24,7 +24,6 @@ telebot.logger.setLevel(logging.INFO)
 def handle_start(message):
     bot.reply_to(message, "Привет партнёр! Сейчас доступны: Сбербанк, ВТБ, Тинькофф")
     msg = bot.send_message(message.chat.id, 'Какой банк вы хотите?', reply_markup=m.start_markup)
-    logging.info()
     logging.info('Пользователь {} начал общение с ботом!'.format(message.chat.id))
     print('Пользователь {} начал общение с ботом!'.format(message.chat.id))
     bot.register_next_step_handler(msg, askCurrencies)
